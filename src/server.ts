@@ -1,9 +1,9 @@
-import express from 'express'
+import express from 'express';
 
 const app = express();
 
 app.get('/test', (request, response) => {
-  return response.send({ "text": "test" })
-})
+  return response.send({ text: 'test' });
+});
 
-app.listen(3333)
+app.listen(3333);
