@@ -1,9 +1,14 @@
-import express from 'express';
+import fastify from 'fastify';
+import 'dotenv/config';
 
-const app = express();
-
-app.get('/test', (request, response) => {
-  return response.send({ text: 'test' });
+const app = fastify({
+  logger: true,
 });
 
-app.listen(3333);
+app.get('/test', (request, reply) => {
+  return reply.send({ text: 'test' });
+});
+
+void app.listen({
+  port: process.env.PORT as unknown as number,
+});
