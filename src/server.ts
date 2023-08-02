@@ -9,4 +9,12 @@ app.get('/test', (request, reply) => {
   return reply.send({ text: 'test' });
 });
 
-void app.listen({ port: env.PORT });
+const start = async () => {
+  try {
+    await app.listen({ port: env.PORT });
+  } catch (err) {
+    app.log.error(err, 'error starting server');
+    process.exit(1);
+  }
+};
+void start();
