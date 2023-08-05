@@ -1,13 +1,12 @@
 import fastify from 'fastify';
 import { env } from './utils/env';
+import { getWeatherData } from './controller';
 
 const app = fastify({
   logger: true,
 });
 
-app.get('/test', (request, reply) => {
-  return reply.send({ text: 'test' });
-});
+app.get('/weather', getWeatherData);
 
 const start = async () => {
   try {
