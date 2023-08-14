@@ -1,10 +1,11 @@
 import { FetchError, ofetch } from 'ofetch';
 import { WeatherData } from '../models/WeatherData';
 import { env } from '../utils/env';
+import { weatherError } from '../models/WeatherError';
 
 export const weatherDataRequest = async (
   city: string,
-): Promise<WeatherData | string> => {
+): Promise<WeatherData | weatherError> => {
   try {
     const { main, clouds, weather, sys, name } = await ofetch<WeatherData>(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${env.API_KEY}&lang=pt_br`,
@@ -19,7 +20,10 @@ export const weatherDataRequest = async (
     };
   } catch (err) {
     if (err instanceof FetchError) {
-      if (err.status === 404) return 'city not found';
+      return {
+        status: err.status,
+        error: err.message,
+      };
     }
 
     throw err;
